@@ -60,10 +60,30 @@ builder.Services.ConfigureApplicationCookie(options =>
   options.AccessDeniedPath = "/khongduoctruycap.html";
 });
 
+builder.Services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                  var gconfig = builder.Configuration.GetSection("Authentication:Google");
+                  options.ClientId = gconfig["ClientId"];
+                  options.ClientSecret = gconfig["ClientSecret"];
+
+                  // https://localhost:5221/signin-google
+                  options.CallbackPath = "/dang-nhap-tu-google";
+                })
+                .AddFacebook(options =>
+                {
+                  var fconfig = builder.Configuration.GetSection("Authentication:Facebook");
+                  options.AppId = fconfig["AppId"];
+                  options.AppSecret = fconfig["AppSecret"];
+                  options.CallbackPath = "/dang-nhap-tu-facebook";
+                });
+
 var app = builder.Build();
 
-app.UseAuthentication();
-app.UseAuthorization();
+app.UseCookiePolicy(new CookiePolicyOptions()
+{
+  MinimumSameSitePolicy = SameSiteMode.Lax
+});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -78,6 +98,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
