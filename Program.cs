@@ -80,6 +80,17 @@ builder.Services.AddAuthentication()
                   options.CallbackPath = "/dang-nhap-tu-facebook";
                 });
 
+builder.Services.AddAuthorization(options =>
+{
+  options.AddPolicy("AllowEditRole", policyBuilder =>
+  {
+    policyBuilder.RequireAuthenticatedUser();
+    // policyBuilder.RequireRole("Administrator");
+    // policyBuilder.RequireRole("Editor");
+    policyBuilder.RequireClaim("canedit", "add", "post");
+  });
+});
+
 var app = builder.Build();
 
 app.UseCookiePolicy(new CookiePolicyOptions()
