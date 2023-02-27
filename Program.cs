@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using App.Services;
+using App.Security.Requirements;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +28,7 @@ var mailSettings = builder.Configuration.GetSection("MailSettings");
 builder.Services.Configure<MailSettings>(mailSettings);
 builder.Services.AddSingleton<IEmailSender, SendMailService>();
 builder.Services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
+builder.Services.AddTransient<IAuthorizationHandler, AppAuthorizationHandler>();
 
 // Truy cập IdentityOptions
 builder.Services.Configure<IdentityOptions>(options =>
@@ -88,6 +91,22 @@ builder.Services.AddAuthorization(options =>
     // policyBuilder.RequireRole("Administrator");
     // policyBuilder.RequireRole("Editor");
     policyBuilder.RequireClaim("canedit", "add", "post");
+  });
+
+  options.AddPolicy("InGenZ", policyBuilder =>
+  {
+    policyBuilder.RequireAuthenticatedUser();
+    policyBuilder.Requirements.Add(new GenZRequirement());
+  });
+
+  options.AddPolicy("ShowAdminMenu", policyBuilder =>
+  {
+    policyBuilder.RequireRole("Administrator");
+  });
+
+  options.AddPolicy("CanUpdateArticle", policyBuilder =>
+  {
+    policyBuilder.Requirements.Add(new ArticleUpdateRequirement());
   });
 });
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,10 +14,12 @@ namespace RazorWeb.Pages.Blog
   public class EditModel : PageModel
   {
     private readonly RazorWeb.Models.MyBlogContext _context;
+    private readonly IAuthorizationService _authorization;
 
-    public EditModel(RazorWeb.Models.MyBlogContext context)
+    public EditModel(RazorWeb.Models.MyBlogContext context, IAuthorizationService authorization)
     {
       _context = context;
+      _authorization = authorization;
     }
 
     [BindProperty]
@@ -38,8 +41,6 @@ namespace RazorWeb.Pages.Blog
       return Page();
     }
 
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see https://aka.ms/RazorPagesCRUD.
     public async Task<IActionResult> OnPostAsync()
     {
       if (!ModelState.IsValid)
@@ -51,7 +52,15 @@ namespace RazorWeb.Pages.Blog
 
       try
       {
-        await _context.SaveChangesAsync();
+        var canupdate = await _authorization.AuthorizeAsync(this.User, Article, "CanUpdateArticle");
+        if (canupdate.Succeeded)
+        {
+          await _context.SaveChangesAsync();
+        }
+        else
+        {
+          return Content("Không được quyền truy cập");
+        }
       }
       catch (DbUpdateConcurrencyException)
       {
