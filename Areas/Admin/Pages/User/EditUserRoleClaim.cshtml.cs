@@ -3,7 +3,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using RazorWeb.Models;
+using App.Models;
 
 namespace App.Admin.User
 {
@@ -24,7 +24,7 @@ namespace App.Admin.User
 
     [BindProperty]
     public InputModel Input { get; set; }
-    private readonly MyBlogContext _context;
+    private readonly AppDbContext _context;
     private readonly UserManager<AppUser> _userManager;
 
     [TempData]
@@ -32,7 +32,7 @@ namespace App.Admin.User
     public AppUser user { get; set; }
     public IdentityUserClaim<string> userclaim { get; set; }
 
-    public EditUserRoleClaimModel(MyBlogContext context, UserManager<AppUser> userManager)
+    public EditUserRoleClaimModel(AppDbContext context, UserManager<AppUser> userManager)
     {
       _context = context;
       _userManager = userManager;

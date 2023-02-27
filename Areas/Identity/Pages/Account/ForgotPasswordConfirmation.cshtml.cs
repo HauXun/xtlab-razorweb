@@ -4,7 +4,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace RazorWeb.Areas.Identity.Pages.Account
+namespace App.Areas.Identity.Pages.Account
 {
 
   [AllowAnonymous]

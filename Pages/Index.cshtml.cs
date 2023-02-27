@@ -1,4 +1,4 @@
-﻿using RazorWeb.Models;
+﻿using App.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -7,9 +7,9 @@ namespace CS58.Pages;
 public class IndexModel : PageModel
 {
   private readonly ILogger<IndexModel> _logger;
-  private readonly MyBlogContext _myBlogContext;
+  private readonly AppDbContext _myBlogContext;
 
-  public IndexModel(ILogger<IndexModel> logger, MyBlogContext myBlogContext)
+  public IndexModel(ILogger<IndexModel> logger, AppDbContext myBlogContext)
   {
     _logger = logger;
     _myBlogContext = myBlogContext;

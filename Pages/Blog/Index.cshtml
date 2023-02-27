@@ -1,5 +1,5 @@
 @page
-@model RazorWeb.Pages.Blog.IndexModel
+@model App.Pages.Blog.IndexModel
 
 @{
     ViewData["Title"] = "Các bài viết";
@@ -52,7 +52,7 @@
 </table>
 
 @{
-    var pagingmodel = new RazorWeb.Helpers.PagingModel()
+    var pagingmodel = new App.Helpers.PagingModel()
     {
         currentpage = Model.currentPage,
         countpages = Model.countPages,

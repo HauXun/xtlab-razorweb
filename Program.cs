@@ -1,4 +1,4 @@
-using RazorWeb.Models;
+using App.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -10,14 +10,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<MyBlogContext>(options =>
+builder.Services.AddDbContext<AppDbContext>(options =>
 {
   string connectString = builder.Configuration.GetConnectionString("MyBlogContext");
   options.UseSqlServer(connectString);
 });
 
 builder.Services.AddIdentity<AppUser, IdentityRole>()
-                .AddEntityFrameworkStores<MyBlogContext>()
+                .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
 // builder.Services.AddDefaultIdentity<AppUser>()

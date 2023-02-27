@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using RazorWeb.Models;
+using App.Models;
 
 namespace App.Admin.Role
 {
@@ -17,7 +17,7 @@ namespace App.Admin.Role
       public string[] Claims { get; init; }
     }
 
-    public IndexModel(RoleManager<IdentityRole> roleManager, MyBlogContext context) : base(roleManager, context)
+    public IndexModel(RoleManager<IdentityRole> roleManager, AppDbContext context) : base(roleManager, context)
     {
     }
 

@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using RazorWeb.Models;
+using App.Models;
 
-namespace RazorWeb.Pages.Blog
+namespace App.Pages.Blog
 {
   [Authorize(Policy = "InGenZ")]
   public class DetailsModel : PageModel
   {
-    private readonly RazorWeb.Models.MyBlogContext _context;
+    private readonly App.Models.AppDbContext _context;
 
-    public DetailsModel(RazorWeb.Models.MyBlogContext context)
+    public DetailsModel(App.Models.AppDbContext context)
     {
       _context = context;
     }

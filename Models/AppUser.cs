@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
-namespace RazorWeb.Models
+namespace App.Models
 {
   public class AppUser : IdentityUser
   {

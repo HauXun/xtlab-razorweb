@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using RazorWeb.Models;
+using App.Models;
 
 namespace App.Admin.Role
 {
   [Authorize(Roles = "Administrator")]
   public class CreateModel : RolePageModel
   {
-    public CreateModel(RoleManager<IdentityRole> roleManager, MyBlogContext context) : base(roleManager, context)
+    public CreateModel(RoleManager<IdentityRole> roleManager, AppDbContext context) : base(roleManager, context)
     {
     }
 
